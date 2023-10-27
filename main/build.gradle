@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'dk.bondegaard.team'
+version '1.0'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url "https://repo.triumphteam.dev/snapshots"
+    }
+
+    maven {
+        url 'https://jitpack.io'
+    }
+
+    maven {
+        url 'https://repo.codemc.io/repository/maven-public/'
+    }
+    maven {
+        url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+    maven {
+        url 'https://maven.enginehub.org/repo/'
+    }
+
+    maven {
+        url 'https://repo.dmulloy2.net/repository/public/'
+    }
+
+    flatDir {
+        dir 'libs'
+    }
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.jetbrains:annotations:23.1.0'
+    annotationProcessor 'org.jetbrains:annotations:23.1.0'
+
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+    compileOnly 'me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0'
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT'
+    compileOnly 'com.sk89q:worldguard:6.1.1-SNAPSHOT'
+
+    implementation 'de.tr7zw:item-nbt-api:2.11.1'
+    implementation 'dev.triumphteam:triumph-cmd-bukkit:2.0.0-SNAPSHOT'
+    implementation 'dev.triumphteam:triumph-gui:3.1.4'
+
+    // Modules
+    implementation project(':common')
+    implementation project(':v1_12_R1')
+    implementation project(':v1_8_R3')
+}
+
+archivesBaseName = 'Team'
+
+shadowJar {
+    archiveClassifier.set('')
+}
+
+build.finalizedBy shadowJar

@@ -1,0 +1,7 @@
+lang:
+  prefix: "§8§l| §b§lTEAMS §8§l|§r "
+
+  cmd-unknown-sub-command: '&7The command &c/{FULL_COMMAND} &7does not exist.'
+  cmd-invalid-argument: '&7Invalid argument, please try another one.'
+  cmd-not-enough-args: '&7The command has too few arguments.'
+  cmd-too-many-args: '&7The command has too many arguments.'

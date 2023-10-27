@@ -1,0 +1,5 @@
+rootProject.name = 'Team'
+include 'common'
+include 'main'
+include 'v1_12_R1'
+include 'v1_8_R3'

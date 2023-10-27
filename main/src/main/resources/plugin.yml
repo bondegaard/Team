@@ -1,0 +1,6 @@
+name: Team
+main: dk.bondegaard.team.Main
+version: 1.0.0
+author: Bondegaard
+softdepend:
+  - Vault
