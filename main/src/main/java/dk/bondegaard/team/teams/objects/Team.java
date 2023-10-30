@@ -4,13 +4,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dk.bondegaard.team.utils.GsonUtil;
+import dk.bondegaard.team.utils.PlayerUtil;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class Team {
@@ -41,6 +44,7 @@ public class Team {
 
     public Team loadTeam(JsonObject teamObject) {
         this.deserialize(teamObject);
+        this.teamStats.setLastJoin(new Timestamp(System.currentTimeMillis()));
         return this;
     }
 
@@ -51,6 +55,24 @@ public class Team {
     public boolean isTeamMember(OfflinePlayer player) {
         return members.stream().anyMatch(teamMember -> teamMember.getUuid().equals(player.getUniqueId().toString()));
     }
+
+
+    public void sendMessageToTeam(String message) {
+        for (String memberUUID: members.stream().map(TeamMember::getUuid).collect(Collectors.toList())) {
+            Player player = Bukkit.getPlayer(memberUUID);
+            if (player == null) continue;
+            PlayerUtil.sendMessage(player, message);
+        }
+    }
+
+    public void sendMessageToTeam(List<String> messages) {
+        for (String memberUUID: members.stream().map(TeamMember::getUuid).collect(Collectors.toList())) {
+            Player player = Bukkit.getPlayer(memberUUID);
+            if (player == null) continue;
+            PlayerUtil.sendMessages(player, messages);
+        }
+    }
+
 
     public JsonObject serialize() {
         JsonObject teamObject = new JsonObject();
@@ -115,6 +137,5 @@ public class Team {
             }
         }
     }
-
 
 }

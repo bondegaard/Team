@@ -1,21 +1,33 @@
 package dk.bondegaard.team.teams.objects;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
-@Data
+@Getter @Setter
 public class TeamStats {
 
-    private final int kills;
+    private int kills;
 
-    private final int deaths;
+    private int deaths;
 
-    private final int blocksBroken;
+    private int blocksBroken;
 
-    private final int blocksPlaced;
+    private int blocksPlaced;
 
-    private final Timestamp created;
+    private Timestamp created;
 
-    private final Timestamp lastJoin;
+    private Timestamp lastJoin;
+
+    private Timestamp lastLoaded;
+
+    public TeamStats(int kills, int deaths, int blocksBroken, int blocksPlaced, Timestamp created, Timestamp lastJoin) {
+        this.kills = kills;
+        this.deaths = deaths;
+        this.blocksBroken = blocksBroken;
+        this.blocksPlaced = blocksPlaced;
+        this.created = created;
+        this.lastJoin = lastJoin;
+    }
 }

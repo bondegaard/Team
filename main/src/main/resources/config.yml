@@ -1,3 +1,12 @@
+# How should the data be stored from this plugin?
+# json - Store locally with the help of json on your server (DEFAULT)
+data: json
+
+# How should the plugin display all team features to the player
+# chat - Send all information with the help of chat messages (DEFAULT)
+# gui - Display information with the help of GUI's
+team: chat
+
 lang:
   prefix: "§8§l| §b§lTEAMS §8§l|§r "
 

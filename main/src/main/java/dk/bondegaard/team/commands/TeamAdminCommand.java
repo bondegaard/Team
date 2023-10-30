@@ -7,12 +7,13 @@ import dk.bondegaard.team.utils.PlayerUtil;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class TeamAdminCommand extends BaseCommand {
     private final String prefix;
 
     public TeamAdminCommand() {
-        super("teamadmin", Arrays.asList("teama"));
+        super("teamadmin", Collections.singletonList("teama"));
         this.prefix = Main.getInstance().getConfig().getString("lang.prefix");
     }
 

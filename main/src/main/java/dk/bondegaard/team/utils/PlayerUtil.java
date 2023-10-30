@@ -15,6 +15,12 @@ public final class PlayerUtil {
         sender.sendMessage(StringUtil.colorize(message));
     }
 
+    public static void sendMessages(CommandSender sender, List<String> messages) {
+        for (String message: messages) {
+            sendMessage(sender, message);
+        }
+    }
+
     public static void sendTextComponent(Player player, TextComponent textComponent) {
         textComponent.setText(StringUtil.colorize(textComponent.getText()));
         player.spigot().sendMessage(textComponent);
