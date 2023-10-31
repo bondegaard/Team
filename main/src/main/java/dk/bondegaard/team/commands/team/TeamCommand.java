@@ -90,4 +90,9 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.kick(player, args);
     }
 
+    @SubCommand(value = "leave")
+    public void leave(Player player) {
+        this.teamCommandProvider.leave(player);
+    }
+
 }

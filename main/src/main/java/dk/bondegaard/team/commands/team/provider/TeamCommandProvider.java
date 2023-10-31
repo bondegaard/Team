@@ -29,4 +29,6 @@ public interface TeamCommandProvider {
     void join(Player player, List<String> args);
 
     void kick(Player player, List<String> args);
+
+    void leave(Player player);
 }

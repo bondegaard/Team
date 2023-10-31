@@ -5,6 +5,7 @@ import dk.bondegaard.team.teams.TeamHandler;
 import dk.bondegaard.team.teams.TeamUtils;
 import dk.bondegaard.team.teams.events.TeamJoinEvent;
 import dk.bondegaard.team.teams.events.TeamKickEvent;
+import dk.bondegaard.team.teams.events.TeamLeaveEvent;
 import dk.bondegaard.team.teams.objects.Team;
 import dk.bondegaard.team.teams.objects.TeamInvite;
 import dk.bondegaard.team.teams.objects.TeamMember;
@@ -361,5 +362,36 @@ public class CommandChatMessages implements TeamCommandProvider {
 
         team.getMembers().remove(targetMember);
         team.sendMessageToTeam(Main.getPrefix() + "§c"+target.getName()+" has been kicked from your team by  " + player.getName()+"!");
+    }
+
+    @Override
+    public void leave(Player player) {
+        // Check that the player is in a team
+        Optional<Team> t = TeamUtils.getPlayerTeam(player);
+        if (!t.isPresent()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not in a team!");
+            return;
+        }
+        Team team = t.get();
+
+        Optional<TeamMember> tm = TeamUtils.getPlayerTeamMember(player, team);
+        if (!tm.isPresent()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cCould not find your team role!");
+            return;
+        }
+        TeamMember teamMember = tm.get();
+
+        if (teamMember.getRole() == TeamRole.LEADER) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou cannot leave your team as the leader!");
+            return;
+        }
+
+        TeamLeaveEvent teamLeaveEvent = new TeamLeaveEvent(team, teamMember);
+        teamLeaveEvent.call();
+
+        if (teamLeaveEvent.isCancelled()) return;
+
+        team.getMembers().remove(teamMember);
+        team.sendMessageToTeam(Main.getPrefix() + "§c"+player.getName()+" decided to leave your team by!");
     }
 }
