@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import dk.bondegaard.team.Main;
-import dk.bondegaard.team.teams.TeamInviteHandler;
 import dk.bondegaard.team.teams.TeamUtils;
 import dk.bondegaard.team.teams.objects.Team;
 import dk.bondegaard.team.teams.objects.TeamInvite;

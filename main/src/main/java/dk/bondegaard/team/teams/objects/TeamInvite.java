@@ -2,7 +2,6 @@ package dk.bondegaard.team.teams.objects;
 
 import lombok.Data;
 
-
 import java.sql.Timestamp;
 
 @Data

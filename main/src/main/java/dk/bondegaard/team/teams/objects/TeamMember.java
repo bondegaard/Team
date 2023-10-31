@@ -1,13 +1,9 @@
 package dk.bondegaard.team.teams.objects;
 
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
