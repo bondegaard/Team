@@ -70,6 +70,11 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.invite(player, args);
     }
 
+    @SubCommand(value = "removeinvite", alias = {"delinvite", "uninvite"})
+    public void removeInvite(Player player, List<String> args) {
+        this.teamCommandProvider.removeInvite(player, args);
+    }
+
     @SubCommand(value = "invites")
     public void invites(Player player) {
         this.teamCommandProvider.invites(player);

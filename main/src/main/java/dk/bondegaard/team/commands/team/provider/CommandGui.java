@@ -47,6 +47,11 @@ public class CommandGui implements TeamCommandProvider {
     }
 
     @Override
+    public void removeInvite(Player player, List<String> args) {
+
+    }
+
+    @Override
     public void invites(Player player) {
 
     }

@@ -152,6 +152,59 @@ public class CommandChatMessages implements TeamCommandProvider {
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args.get(0));
         if (target.getUniqueId() == null) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe player that you selected has never played before!");
+            return;
+        }
+        if (target.getUniqueId().toString().equalsIgnoreCase(player.getUniqueId().toString())) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not allowed to invite yourself to your team!");
+            return;
+        }
+
+        // Check that the player is in a team
+        Optional<Team> t = TeamUtils.getPlayerTeam(player);
+        if (!t.isPresent()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not in a team!");
+            return;
+        }
+        Team team = t.get();
+
+        Optional<TeamMember> tm = TeamUtils.getPlayerTeamMember(player, team);
+        if (!tm.isPresent()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cCould not find your team role!");
+            return;
+        }
+        TeamMember teamMember = tm.get();
+
+        if (team.isTeamMember(target)) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe player that you selected is already in your team!");
+            return;
+        }
+
+        if (team.getTeamPerms().getInvitePlayers().getId() < teamMember.getRole().getId()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not allowed to invite players to your team!");
+            return;
+        }
+
+        if (Main.getInstance().getTeamInviteHandler().hasInvite(target, team)) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe selected player already has an invite to your team!");
+            return;
+        }
+
+        TeamInvite teamInvite = new TeamInvite(Main.getInstance().getTeamInviteHandler().getNewInviteID(), team.getTeamID(), player.getUniqueId().toString(), player.getName(), target.getUniqueId().toString(), target.getName(), new Timestamp(System.currentTimeMillis()));
+        Main.getInstance().getTeamInviteHandler().getInvites().add(teamInvite);
+
+        PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou invited "+target.getName()+" to your team!");
+
+    }
+
+    @Override
+    public void removeInvite(Player player, List<String> args) {
+        if (args.size() < 1) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou need to choose a player /team removeinvite <player>!");
+            return;
+        }
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args.get(0));
+        if (target.getUniqueId() == null) {
             PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe player that you selected is not online!");
             return;
         }
@@ -172,20 +225,26 @@ public class CommandChatMessages implements TeamCommandProvider {
         TeamMember teamMember = tm.get();
 
         if (team.getTeamPerms().getInvitePlayers().getId() < teamMember.getRole().getId()) {
-            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not allowed to invite players to your team!");
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not allowed to remove invites for your team!");
             return;
         }
 
-        if (Main.getInstance().getTeamInviteHandler().hasInvite(target, team)) {
-            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe selected player already has an invite to your team!");
+        if (team.isTeamMember(target)) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe player that you selected is apart of your team!");
             return;
         }
 
-        TeamInvite teamInvite = new TeamInvite(Main.getInstance().getTeamInviteHandler().getNewInviteID(), team.getTeamID(), player.getUniqueId().toString(), player.getName(), target.getUniqueId().toString(), target.getName(), new Timestamp(System.currentTimeMillis()));
-        Main.getInstance().getTeamInviteHandler().getInvites().add(teamInvite);
-
-        PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou invited "+target.getName()+" to your team!");
-
+        if (!Main.getInstance().getTeamInviteHandler().hasInvite(target, team)) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cThe selected player doesn't have an invite to your team!");
+            return;
+        }
+        TeamInvite teamInvite = Main.getInstance().getTeamInviteHandler().getInvite(target, team);
+        if (teamInvite == null) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cCould not find the invite!");
+            return;
+        }
+        PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou removed "+teamInvite.getTargetName()+" invite to your team, created by "+teamInvite.getSenderName()+"!");
+        Main.getInstance().getDataProvider().deleteInvite(teamInvite);
     }
 
     @Override
