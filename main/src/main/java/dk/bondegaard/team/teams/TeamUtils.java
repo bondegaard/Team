@@ -2,6 +2,7 @@ package dk.bondegaard.team.teams;
 
 import dk.bondegaard.team.Main;
 import dk.bondegaard.team.teams.objects.Team;
+import dk.bondegaard.team.teams.objects.TeamMember;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -24,15 +25,15 @@ public class TeamUtils {
     }
 
     public static Team getTeam(int id) {
-        return teamHandler.getTeams().stream().filter(team -> team.getTeamID() == id).findFirst().get();
+        return teamHandler.getTeams().stream().filter(team -> team.getTeamID() == id).findFirst().orElse(null);
     }
 
     public static Team getTeam(String name) {
-        return teamHandler.getTeams().stream().filter(team -> team.getName().equalsIgnoreCase(name)).findFirst().get();
+        return teamHandler.getTeams().stream().filter(team -> team.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public static Team getTeam(Team t) {
-        return teamHandler.getTeams().stream().filter(team -> team.getTeamID() == t.getTeamID()).findFirst().get();
+        return teamHandler.getTeams().stream().filter(team -> team.getTeamID() == t.getTeamID()).findFirst().orElse(null);
     }
 
     public static Optional<Team> getPlayerTeam(Player player) {
@@ -41,6 +42,10 @@ public class TeamUtils {
                         .stream()
                         .anyMatch(teamMember -> teamMember.getUuid().equals(player.getUniqueId().toString())))
                 .findFirst();
+    }
+
+    public static Optional<TeamMember> getPlayerTeamMember(Player player, Team team) {
+       return team.getMembers().stream().filter(teamMember -> teamMember.getUuid().equalsIgnoreCase(player.getUniqueId().toString())).findFirst();
     }
 
     public static boolean isPlayerInTeam(Player player) {

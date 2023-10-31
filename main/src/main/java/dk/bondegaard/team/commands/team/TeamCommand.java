@@ -6,6 +6,7 @@ import dev.triumphteam.cmd.core.annotation.Default;
 import dev.triumphteam.cmd.core.annotation.SubCommand;
 import dk.bondegaard.team.Main;
 import dk.bondegaard.team.commands.team.provider.CommandChatMessages;
+import dk.bondegaard.team.commands.team.provider.CommandGui;
 import dk.bondegaard.team.commands.team.provider.TeamCommandProvider;
 import org.bukkit.entity.Player;
 
@@ -22,6 +23,10 @@ public class TeamCommand extends BaseCommand {
 
         String teamType = Main.getInstance().getConfig().contains("team") ? Main.getInstance().getConfig().getString("team") : "";
         switch (teamType) {
+            case "gui":
+            case "menu":
+                this.teamCommandProvider = new CommandGui();
+                break;
             default:
                 this.teamCommandProvider = new CommandChatMessages();
         }
@@ -43,10 +48,7 @@ public class TeamCommand extends BaseCommand {
     }
 
     @SubCommand("info")
-    public void info(Player player) {
-        this.teamCommandProvider.info(player);
-
-    }
+    public void info(Player player) {this.teamCommandProvider.info(player);}
 
     @SubCommand(value = "load")
     public void load(Player player) {
@@ -61,6 +63,21 @@ public class TeamCommand extends BaseCommand {
     @SubCommand(value = "list")
     public void list(Player player) {
         this.teamCommandProvider.list(player);
+    }
+
+    @SubCommand(value = "invite")
+    public void invite(Player player, List<String> args) {
+        this.teamCommandProvider.invite(player, args);
+    }
+
+    @SubCommand(value = "invites")
+    public void invites(Player player) {
+        this.teamCommandProvider.invites(player);
+    }
+
+    @SubCommand(value = "join")
+    public void join(Player player, List<String> args) {
+        this.teamCommandProvider.join(player, args);
     }
 
 }

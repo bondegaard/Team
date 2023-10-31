@@ -26,18 +26,6 @@ public class TeamHandler {
         return true;
     }
 
-    public boolean deleteTeam(Team team) {
-        if (!TeamUtils.existTeam(team)) return false;
-
-        File teamFile = new File(Main.getInstance().getDataFolder(), "teams/" + team.getTeamID() + ".json");
-        if (teamFile.exists() && !teamFile.isDirectory()) {
-            teamFile.delete();
-        }
-
-        teams.remove(team);
-        return true;
-    }
-
     private int getNewTeamID() {
         return teams.stream()
                 .mapToInt(Team::getTeamID)

@@ -20,11 +20,14 @@ public class Team {
 
     private final int teamID;
     private final List<TeamMember> members = new ArrayList<>();
+    private TeamPerms teamPerms;
     private TeamStats teamStats;
 
     private String name = "";
     private int level = 1;
     private long balance = 0;
+
+    private int maxMembers = 3;
 
 
     public Team(int teamID) {
@@ -35,6 +38,7 @@ public class Team {
         this.teamID = teamID;
         this.name = name;
         this.teamStats = new TeamStats(0, 0, 0, 0, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
+        this.teamPerms = new TeamPerms();
 
         // Add owner to team
         TeamMember owner = new TeamMember(creator.getUniqueId().toString(), creator.getName());
@@ -55,6 +59,7 @@ public class Team {
     public boolean isTeamMember(OfflinePlayer player) {
         return members.stream().anyMatch(teamMember -> teamMember.getUuid().equals(player.getUniqueId().toString()));
     }
+
 
 
     public void sendMessageToTeam(String message) {
@@ -79,6 +84,7 @@ public class Team {
         teamObject.addProperty("id", teamID);
         teamObject.addProperty("name", name);
         teamObject.addProperty("level", level);
+        teamObject.addProperty("max-members", maxMembers);
         teamObject.addProperty("balance", balance);
         teamObject.add("stats", GsonUtil.serialize(teamStats));
 
@@ -102,7 +108,10 @@ public class Team {
         this.name = teamObject.get("name").getAsString();
         this.level = teamObject.has("level") ? teamObject.get("level").getAsInt() : 1;
         this.balance = teamObject.has("balance") ? teamObject.get("balance").getAsLong() : 0;
+        this.maxMembers = teamObject.has("max-members") ? teamObject.get("max-members").getAsInt() : 3;
         this.teamStats = teamObject.has("stats") ? GsonUtil.deserialize(teamObject.get("stats").getAsJsonObject(), TeamStats.class) : new TeamStats(0, 0, 0, 0, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
+        this.teamPerms = teamObject.has("perms") ? GsonUtil.deserialize(teamObject.get("perms").getAsJsonObject(), TeamPerms.class) : new TeamPerms();
+
 
         // Load members
         JsonArray membersArray = teamObject.get("members").getAsJsonArray();
@@ -118,20 +127,7 @@ public class Team {
                 int roleId = memberObject.has("role") ? memberObject.get("role").getAsInt() : -1;
                 TeamRole role = TeamRole.byID(roleId);
 
-                // Load Member permissions
-                JsonArray permsArray = memberObject.has("perms") ? memberObject.get("perms").getAsJsonArray() : new JsonArray();
-                List<TeamPerm> perms = new ArrayList<>();
-                for (JsonElement permElement : permsArray) {
-                    if (permElement.isJsonObject()) {
-                        JsonObject permObject = permElement.getAsJsonObject();
-                        String permName = permObject.get("name").getAsString();
-                        boolean allow = permObject.get("allow").getAsBoolean();
-                        TeamPerm perm = new TeamPerm(permName, allow);
-                        perms.add(perm);
-                    }
-                }
-
-                TeamMember teamMember = new TeamMember(uuid, memberName, role, perms);
+                TeamMember teamMember = new TeamMember(uuid, memberName, role);
                 // Assuming you have a list to store members in your Team class
                 members.add(teamMember);
             }

@@ -5,8 +5,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import dk.bondegaard.team.Main;
+import dk.bondegaard.team.teams.TeamInviteHandler;
 import dk.bondegaard.team.teams.TeamUtils;
 import dk.bondegaard.team.teams.objects.Team;
+import dk.bondegaard.team.teams.objects.TeamInvite;
+import dk.bondegaard.team.utils.GsonUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -79,8 +82,6 @@ public class JsonData implements DataProvider {
             directory.mkdirs();
         }
 
-        Gson gson = new Gson();
-
         File[] jsonFiles = directory.listFiles((dir, name) -> name.endsWith(".json"));
 
         if (jsonFiles == null) {
@@ -107,5 +108,84 @@ public class JsonData implements DataProvider {
 
         Main.getInstance().getTeamHandler().getTeams().add(new Team(id).loadTeam(teamObject));
         return true;
+    }
+
+    @Override
+    public boolean deleteTeam(@NotNull Team team) {
+        if (!TeamUtils.existTeam(team)) return false;
+
+        File teamFile = new File(Main.getInstance().getDataFolder(), "teams/" + team.getTeamID() + ".json");
+        if (teamFile.exists() && !teamFile.isDirectory()) {
+            teamFile.delete();
+        }
+
+        Main.getInstance().getTeamHandler().getTeams().remove(team);
+        return true;
+    }
+
+    @Override
+    public void saveInvites() {
+        File directory = new File(Main.getInstance().getDataFolder().getAbsolutePath() + "/invites/");
+
+        if (!directory.exists() || !directory.isDirectory()) {
+            directory.mkdirs();
+        }
+
+        Gson gson = new Gson();
+
+        for (TeamInvite teamInvite : Main.getInstance().getTeamInviteHandler().getInvites()) {
+            JsonObject teamJson = GsonUtil.serialize(teamInvite);
+
+            String filename = teamInvite.getInviteID() + ".json";
+            File teamFile = new File(directory, filename);
+
+            try (FileWriter fileWriter = new FileWriter(teamFile)) {
+                gson.toJson(teamJson, fileWriter);
+            } catch (IOException e) {
+                Main.getInstance().getLogger().warning("Error saving invite-" + teamInvite.getInviteID() + " to file: " + e.getMessage());
+            }
+        }
+        Main.getInstance().getLogger().info("Saved all invites!");
+    }
+
+    @Override
+    public void loadInvites() {
+        File directory = new File(Main.getInstance().getDataFolder().getAbsolutePath() + "/invites/");
+
+        if (!directory.exists() || !directory.isDirectory()) {
+            directory.mkdirs();
+        }
+
+        File[] jsonFiles = directory.listFiles((dir, name) -> name.endsWith(".json"));
+
+        if (jsonFiles == null) {
+            return;
+        }
+
+        for (File jsonFile : jsonFiles) {
+            try (FileReader fileReader = new FileReader(jsonFile)) {
+                JsonParser jsonParser = new JsonParser();
+                JsonObject inviteJson = jsonParser.parse(fileReader).getAsJsonObject();
+                TeamInvite teamInvite = GsonUtil.deserialize(inviteJson, TeamInvite.class);
+                if (Main.getInstance().getTeamInviteHandler().inviteExist(teamInvite.getInviteID())) continue;
+                Main.getInstance().getTeamInviteHandler().getInvites().add(teamInvite);
+
+            } catch (IOException | JsonSyntaxException e) {
+                Main.getInstance().getLogger().warning("Error loading team from file: " + e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void deleteInvite(@NotNull TeamInvite teamInvite) {
+        if (!Main.getInstance().getTeamInviteHandler().inviteExist(teamInvite)) return;
+
+        File teamFile = new File(Main.getInstance().getDataFolder(), "/invites/" + teamInvite.getInviteID() + ".json");
+        if (teamFile.exists() && !teamFile.isDirectory()) {
+            teamFile.delete();
+        }
+
+        Main.getInstance().getTeamInviteHandler().getInvites().remove(teamInvite);
+        return;
     }
 }

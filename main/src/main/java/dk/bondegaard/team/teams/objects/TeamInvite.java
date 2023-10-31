@@ -1,17 +1,22 @@
 package dk.bondegaard.team.teams.objects;
 
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+import lombok.Data;
+
 
 import java.sql.Timestamp;
 
+@Data
 public class TeamInvite {
 
-    private Team team;
+    private final int inviteID;
 
-    private OfflinePlayer sender;
+    private final int teamId;
 
-    private OfflinePlayer target;
+    private final String senderUuid;
+    private final String senderName;
 
-    private Timestamp timeSend;
+    private final String targetUuid;
+    private final String targetName;
+
+    private final Timestamp timeSend;
 }

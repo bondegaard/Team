@@ -54,11 +54,13 @@ public class Main extends JavaPlugin {
 
 
         this.dataProvider.loadTeams();
+        this.dataProvider.loadInvites();
     }
 
     @Override
     public void onDisable() {
         this.dataProvider.saveTeams(teamHandler.getTeams());
+        this.dataProvider.saveInvites();
         this.versionSupport = null;
     }
 

@@ -19,4 +19,10 @@ public interface TeamCommandProvider {
     void save(Player player);
 
     void list(Player player);
+
+    void invite(Player player, List<String> args);
+
+    void invites(Player player);
+
+    void join(Player player, List<String> args);
 }

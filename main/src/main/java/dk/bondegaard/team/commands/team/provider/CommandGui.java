@@ -40,4 +40,19 @@ public class CommandGui implements TeamCommandProvider {
     public void list(Player player) {
 
     }
+
+    @Override
+    public void invite(Player player, List<String> args) {
+
+    }
+
+    @Override
+    public void invites(Player player) {
+
+    }
+
+    @Override
+    public void join(Player player, List<String> args) {
+
+    }
 }

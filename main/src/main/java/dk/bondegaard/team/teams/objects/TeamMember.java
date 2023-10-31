@@ -19,21 +19,26 @@ public class TeamMember {
 
     private TeamRole role;
 
-    private List<TeamPerm> perms;
 
-
-    public TeamMember(String uuid, String name, TeamRole role, List<TeamPerm> perms) {
+    /**
+     * @param uuid of the player
+     * @param name of the player
+     * @param role in the team
+     */
+    public TeamMember(String uuid, String name, TeamRole role) {
         this.uuid = uuid;
         this.name = name;
         this.role = role;
-        this.perms = perms;
     }
 
+    /**
+     * @param uuid of the player
+     * @param name of the player
+     */
     public TeamMember(String uuid, String name) {
         this.uuid = uuid;
         this.name = name;
         this.role = TeamRole.MEMBER;
-        this.perms = new ArrayList<>();
     }
 
     public JsonObject serialize() {
@@ -42,15 +47,6 @@ public class TeamMember {
         teamMemberObject.addProperty("name", name);
         teamMemberObject.addProperty("role", role.getId());
 
-        // Perms
-        JsonArray serializedPerms = new JsonArray();
-        for (TeamPerm teamPerm : perms) {
-            JsonObject permObject = new JsonObject();
-            permObject.addProperty("name", teamPerm.getName());
-            permObject.addProperty("allow", teamPerm.getAllow());
-            serializedPerms.add(permObject);
-        }
-        teamMemberObject.add("perms", serializedPerms);
         return teamMemberObject;
     }
 
