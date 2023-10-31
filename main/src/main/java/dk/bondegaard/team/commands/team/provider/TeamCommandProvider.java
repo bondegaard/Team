@@ -27,4 +27,6 @@ public interface TeamCommandProvider {
     void invites(Player player);
 
     void join(Player player, List<String> args);
+
+    void kick(Player player, List<String> args);
 }

@@ -37,12 +37,12 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.execute(player);
     }
 
-    @SubCommand(value = "create", alias = "opret")
+    @SubCommand(value = "create", alias = {"opret", "StartANewAdventure"})
     public void create(Player player, List<String> args) {
         this.teamCommandProvider.create(player, args);
     }
 
-    @SubCommand(value = "delete")
+    @SubCommand(value = "delete", alias = {"disband", "destroy"})
     public void delete(Player player, List<String> args) {
         this.teamCommandProvider.delete(player, args);
     }
@@ -83,6 +83,11 @@ public class TeamCommand extends BaseCommand {
     @SubCommand(value = "join")
     public void join(Player player, List<String> args) {
         this.teamCommandProvider.join(player, args);
+    }
+
+    @SubCommand(value = "kick")
+    public void kick(Player player, List<String> args) {
+        this.teamCommandProvider.kick(player, args);
     }
 
 }

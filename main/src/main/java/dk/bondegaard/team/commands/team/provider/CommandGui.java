@@ -60,4 +60,9 @@ public class CommandGui implements TeamCommandProvider {
     public void join(Player player, List<String> args) {
 
     }
+
+    @Override
+    public void kick(Player player, List<String> args) {
+
+    }
 }
