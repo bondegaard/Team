@@ -1,11 +1,11 @@
-package dk.bondegaard.team.commands.team.provider;
+package dk.bondegaard.team.commands.team.provider.gui;
 
+import dk.bondegaard.team.commands.team.provider.TeamCommandProvider;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-//todo change class name
-public class CommandGui implements TeamCommandProvider {
+public class TeamGuiCommandHandler implements TeamCommandProvider {
     @Override
     public void execute(Player player) {
 
@@ -23,21 +23,6 @@ public class CommandGui implements TeamCommandProvider {
 
     @Override
     public void info(Player player) {
-
-    }
-
-    @Override
-    public void load(Player player) {
-
-    }
-
-    @Override
-    public void save(Player player) {
-
-    }
-
-    @Override
-    public void list(Player player) {
 
     }
 
@@ -72,7 +57,7 @@ public class CommandGui implements TeamCommandProvider {
     }
 
     @Override
-    public void chat(Player player, String message) {
+    public void chat(Player player, List<String> args) {
 
     }
 }

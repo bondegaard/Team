@@ -3,12 +3,11 @@ package dk.bondegaard.team.commands.team;
 
 import dev.triumphteam.cmd.core.BaseCommand;
 import dev.triumphteam.cmd.core.annotation.Default;
-import dev.triumphteam.cmd.core.annotation.Join;
 import dev.triumphteam.cmd.core.annotation.SubCommand;
 import dk.bondegaard.team.Main;
-import dk.bondegaard.team.commands.team.provider.CommandChatMessages;
-import dk.bondegaard.team.commands.team.provider.CommandGui;
 import dk.bondegaard.team.commands.team.provider.TeamCommandProvider;
+import dk.bondegaard.team.commands.team.provider.chat.TeamChatCommandHandler;
+import dk.bondegaard.team.commands.team.provider.gui.TeamGuiCommandHandler;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -26,10 +25,10 @@ public class TeamCommand extends BaseCommand {
         switch (teamType) {
             case "gui":
             case "menu":
-                this.teamCommandProvider = new CommandGui();
+                this.teamCommandProvider = new TeamGuiCommandHandler();
                 break;
             default:
-                this.teamCommandProvider = new CommandChatMessages();
+                this.teamCommandProvider = new TeamChatCommandHandler();
         }
     }
 
@@ -50,21 +49,6 @@ public class TeamCommand extends BaseCommand {
 
     @SubCommand("info")
     public void info(Player player) {this.teamCommandProvider.info(player);}
-
-    @SubCommand(value = "load")
-    public void load(Player player) {
-        this.teamCommandProvider.load(player);
-    }
-
-    @SubCommand(value = "save")
-    public void save(Player player) {
-        this.teamCommandProvider.save(player);
-    }
-
-    @SubCommand(value = "list")
-    public void list(Player player) {
-        this.teamCommandProvider.list(player);
-    }
 
     @SubCommand(value = "invite")
     public void invite(Player player, List<String> args) {
@@ -97,8 +81,8 @@ public class TeamCommand extends BaseCommand {
     }
 
     @SubCommand(value = "chat", alias = {"c", "teamchat", "message"})
-    public void chat(Player player, @Join(" ")String message) {
-        this.teamCommandProvider.chat(player, message);
+    public void chat(Player player, List<String> args) {
+        this.teamCommandProvider.chat(player, args);
     }
 
 }

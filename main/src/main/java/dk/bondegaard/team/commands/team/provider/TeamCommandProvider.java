@@ -1,6 +1,5 @@
 package dk.bondegaard.team.commands.team.provider;
 
-import dev.triumphteam.cmd.core.annotation.Join;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -15,12 +14,6 @@ public interface TeamCommandProvider {
 
     void info(Player player);
 
-    void load(Player player);
-
-    void save(Player player);
-
-    void list(Player player);
-
     void invite(Player player, List<String> args);
 
     void removeInvite(Player player, List<String> args);
@@ -33,5 +26,5 @@ public interface TeamCommandProvider {
 
     void leave(Player player);
 
-    void chat(Player player, String message);
+    void chat(Player player, List<String> args);
 }
