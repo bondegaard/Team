@@ -96,7 +96,7 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.leave(player);
     }
 
-    @SubCommand(value = "chat")
+    @SubCommand(value = "chat", alias = {"c", "teamchat", "message"})
     public void chat(Player player, @Join(" ")String message) {
         this.teamCommandProvider.chat(player, message);
     }
