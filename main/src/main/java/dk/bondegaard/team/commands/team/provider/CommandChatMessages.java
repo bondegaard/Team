@@ -394,4 +394,28 @@ public class CommandChatMessages implements TeamCommandProvider {
         team.getMembers().remove(teamMember);
         team.sendMessageToTeam(Main.getPrefix() + "§c"+player.getName()+" decided to leave your team by!");
     }
+
+    @Override
+    public void chat(Player player, String message) {
+        // Check that the player is in a team
+        Optional<Team> t = TeamUtils.getPlayerTeam(player);
+        if (!t.isPresent()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not in a team!");
+            return;
+        }
+        Team team = t.get();
+
+
+        Optional<TeamMember> tm = TeamUtils.getPlayerTeamMember(player, team);
+        if (!tm.isPresent()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cCould not find your team role!");
+            return;
+        }
+        TeamMember teamMember = tm.get();
+        if (teamMember.getRole().getId() < team.getTeamPerms().getSendTeamMessages().getId()) {
+            PlayerUtil.sendMessage(player, Main.getPrefix() + " §cYou are not allowed to send your team messages!");
+            return;
+        }
+        team.sendMessageToTeam(Main.getPrefix() + "§c"+player.getName()+": "+message);
+    }
 }

@@ -70,4 +70,9 @@ public class CommandGui implements TeamCommandProvider {
     public void leave(Player player) {
 
     }
+
+    @Override
+    public void chat(Player player, String message) {
+
+    }
 }

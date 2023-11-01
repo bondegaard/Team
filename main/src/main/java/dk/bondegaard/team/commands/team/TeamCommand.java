@@ -3,6 +3,7 @@ package dk.bondegaard.team.commands.team;
 
 import dev.triumphteam.cmd.core.BaseCommand;
 import dev.triumphteam.cmd.core.annotation.Default;
+import dev.triumphteam.cmd.core.annotation.Join;
 import dev.triumphteam.cmd.core.annotation.SubCommand;
 import dk.bondegaard.team.Main;
 import dk.bondegaard.team.commands.team.provider.CommandChatMessages;
@@ -93,6 +94,11 @@ public class TeamCommand extends BaseCommand {
     @SubCommand(value = "leave")
     public void leave(Player player) {
         this.teamCommandProvider.leave(player);
+    }
+
+    @SubCommand(value = "chat")
+    public void chat(Player player, @Join(" ")String message) {
+        this.teamCommandProvider.chat(player, message);
     }
 
 }
