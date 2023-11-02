@@ -114,7 +114,9 @@ public class CommandManagerWrapper {
     }
 
     private void resolveDefaultMessage(CommandSender sender, String langPath) {
-        PlayerUtil.sendMessage(sender, Main.getInstance().getConfig().getString(langPath));
+        String message = Main.getInstance().getConfig().getString(langPath);
+        if (message == null) return;
+        PlayerUtil.sendMessage(sender, message);
     }
 
 }
