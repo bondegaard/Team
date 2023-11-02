@@ -26,6 +26,5 @@ public class Info extends TeamChatSubCommand {
         for (TeamMember teamMember : team.getMembers()) {
             PlayerUtil.sendMessage(player, Main.getPrefix() + " §4* §8- §e" + teamMember.getName() + " (" + teamMember.getRole().getName() + ")");
         }
-        PlayerUtil.sendMessage(player, team.serialize().toString());
     }
 }

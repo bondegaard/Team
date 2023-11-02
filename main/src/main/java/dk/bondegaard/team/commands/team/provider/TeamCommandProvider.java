@@ -31,4 +31,6 @@ public interface TeamCommandProvider {
     void bank(Player player);
 
     void deposit(Player player, List<String> args);
+
+    void withdraw(Player player, List<String> args);
 }

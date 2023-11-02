@@ -70,4 +70,9 @@ public class TeamGuiCommandHandler implements TeamCommandProvider {
     public void deposit(Player player, List<String> args) {
 
     }
+
+    @Override
+    public void withdraw(Player player, List<String> args) {
+
+    }
 }

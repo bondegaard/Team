@@ -95,4 +95,9 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.deposit(player, args);
     }
 
+    @SubCommand(value = "withdraw")
+    public void withdraw(Player player, List<String> args) {
+        this.teamCommandProvider.withdraw(player, args);
+    }
+
 }
