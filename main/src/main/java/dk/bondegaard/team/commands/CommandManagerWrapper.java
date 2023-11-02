@@ -110,7 +110,7 @@ public class CommandManagerWrapper {
                 (sender, context) -> this.resolveDefaultMessage(sender, "lang.cmd-too-many-args"));
 
         this.triumphCommandManager.registerMessage(MessageKey.UNKNOWN_COMMAND,
-                (sender, context) -> this.resolveDefaultMessage(sender, "lang.unknown-sub-command"));
+                (sender, context) -> this.resolveDefaultMessage(sender, "lang.cmd-unknown-sub-command"));
     }
 
     private void resolveDefaultMessage(CommandSender sender, String langPath) {

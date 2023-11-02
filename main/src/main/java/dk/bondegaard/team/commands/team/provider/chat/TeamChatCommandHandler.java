@@ -10,8 +10,8 @@ import java.util.List;
 public class TeamChatCommandHandler implements TeamCommandProvider {
 
 
-    HashMap<String, TeamChatSubCommand> commands = new HashMap<>();
-    List<TeamChatSubCommand> commandHandlers = Arrays.asList(
+    private final HashMap<String, TeamChatSubCommand> commands = new HashMap<>();
+    private final List<TeamChatSubCommand> commandHandlers = Arrays.asList(
             new Default("default"),
             new Create("create"),
             new Delete("delete"),
@@ -22,7 +22,9 @@ public class TeamChatCommandHandler implements TeamCommandProvider {
             new Join("join"),
             new Kick("kick"),
             new Leave("leave"),
-            new Chat("chat")
+            new Chat("chat"),
+            new Bank("bank"),
+            new Deposit("deposit")
     );
 
     public TeamChatCommandHandler() {
@@ -84,5 +86,15 @@ public class TeamChatCommandHandler implements TeamCommandProvider {
     @Override
     public void chat(Player player, List<String> args) {
         commands.get("chat").handle(player, args);
+    }
+
+    @Override
+    public void bank(Player player) {
+        commands.get("bank").handle(player, null);
+    }
+
+    @Override
+    public void deposit(Player player, List<String> args) {
+        commands.get("deposit").handle(player, args);
     }
 }

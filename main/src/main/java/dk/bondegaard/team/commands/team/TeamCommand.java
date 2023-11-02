@@ -85,4 +85,14 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.chat(player, args);
     }
 
+    @SubCommand(value = "bank")
+    public void bank(Player player) {
+        this.teamCommandProvider.bank(player);
+    }
+
+    @SubCommand(value = "deposit")
+    public void deposit(Player player, List<String> args) {
+        this.teamCommandProvider.deposit(player, args);
+    }
+
 }

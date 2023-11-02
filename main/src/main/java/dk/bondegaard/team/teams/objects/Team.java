@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import dk.bondegaard.team.utils.GsonUtil;
 import dk.bondegaard.team.utils.PlayerUtil;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -25,6 +26,7 @@ public class Team {
 
     private String name = "";
     private int level = 1;
+    @Setter
     private long balance = 0;
 
     private int maxMembers = 3;

@@ -27,4 +27,8 @@ public interface TeamCommandProvider {
     void leave(Player player);
 
     void chat(Player player, List<String> args);
+
+    void bank(Player player);
+
+    void deposit(Player player, List<String> args);
 }

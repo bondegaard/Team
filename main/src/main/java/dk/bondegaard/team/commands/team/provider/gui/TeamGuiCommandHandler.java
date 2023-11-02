@@ -60,4 +60,14 @@ public class TeamGuiCommandHandler implements TeamCommandProvider {
     public void chat(Player player, List<String> args) {
 
     }
+
+    @Override
+    public void bank(Player player) {
+
+    }
+
+    @Override
+    public void deposit(Player player, List<String> args) {
+
+    }
 }
