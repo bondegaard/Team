@@ -75,4 +75,14 @@ public class TeamGuiCommandHandler implements TeamCommandProvider {
     public void withdraw(Player player, List<String> args) {
 
     }
+
+    @Override
+    public void promote(Player player, List<String> args) {
+
+    }
+
+    @Override
+    public void demote(Player player, List<String> args) {
+
+    }
 }

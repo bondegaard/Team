@@ -3,6 +3,7 @@ package dk.bondegaard.team.teams;
 import dk.bondegaard.team.Main;
 import dk.bondegaard.team.teams.objects.Team;
 import dk.bondegaard.team.teams.objects.TeamMember;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -46,6 +47,10 @@ public class TeamUtils {
 
     public static @Nullable TeamMember getPlayerTeamMember(Player player, Team team) {
        return team.getMembers().stream().filter(teamMember -> teamMember.getUuid().equalsIgnoreCase(player.getUniqueId().toString())).findFirst().orElse(null);
+    }
+
+    public static @Nullable TeamMember getOfflinePlayerTeamMember(OfflinePlayer player, Team team) {
+        return team.getMembers().stream().filter(teamMember -> teamMember.getUuid().equalsIgnoreCase(player.getUniqueId().toString())).findFirst().orElse(null);
     }
 
     public static boolean isPlayerInTeam(Player player) {

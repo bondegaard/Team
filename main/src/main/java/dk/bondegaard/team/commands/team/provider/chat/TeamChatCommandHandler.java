@@ -25,7 +25,9 @@ public class TeamChatCommandHandler implements TeamCommandProvider {
             new Chat("chat"),
             new Bank("bank"),
             new Deposit("deposit"),
-            new Withdraw("withdraw")
+            new Withdraw("withdraw"),
+            new Promote("promote"),
+            new Demote("demote")
     );
 
     public TeamChatCommandHandler() {
@@ -102,5 +104,15 @@ public class TeamChatCommandHandler implements TeamCommandProvider {
     @Override
     public void withdraw(Player player, List<String> args) {
         commands.get("withdraw").handle(player, args);
+    }
+
+    @Override
+    public void promote(Player player, List<String> args) {
+        commands.get("promote").handle(player, args);
+    }
+
+    @Override
+    public void demote(Player player, List<String> args) {
+        commands.get("demote").handle(player, args);
     }
 }

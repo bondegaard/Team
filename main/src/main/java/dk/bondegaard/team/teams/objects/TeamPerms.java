@@ -11,4 +11,5 @@ public class TeamPerms {
     private TeamRole kickPlayers = TeamRole.LEADER;
     private TeamRole sendTeamMessages = TeamRole.MEMBER;
     private TeamRole withdrawFromBank = TeamRole.LEADER;
+    private TeamRole canPromoteAndDemote = TeamRole.LEADER;
 }

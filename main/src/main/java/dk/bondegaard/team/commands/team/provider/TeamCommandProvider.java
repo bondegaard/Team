@@ -33,4 +33,8 @@ public interface TeamCommandProvider {
     void deposit(Player player, List<String> args);
 
     void withdraw(Player player, List<String> args);
+
+    void promote(Player player, List<String> args);
+
+    void demote(Player player, List<String> args);
 }

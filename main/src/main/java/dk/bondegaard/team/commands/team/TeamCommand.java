@@ -100,4 +100,13 @@ public class TeamCommand extends BaseCommand {
         this.teamCommandProvider.withdraw(player, args);
     }
 
+    @SubCommand(value = "promote", alias = {"uprank"})
+    public void promote(Player player, List<String> args) {
+        this.teamCommandProvider.promote(player, args);
+    }
+
+    @SubCommand(value = "demote", alias = {"derank"})
+    public void demote(Player player, List<String> args) {
+        this.teamCommandProvider.deposit(player, args);
+    }
 }
